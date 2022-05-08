@@ -76,17 +76,17 @@ def callLD():
         if flag_variation:
             metric_value = numeric_value(TRUE_CENTER_VALUE, TRUE_SPREAD)
             ldclient.get().track(METRIC_NAME, random_user, None, metric_value)
-            print("Executing " + str(flag_variation) + ": " + str(i+1) + "/" + NUMBER_OF_ITERATIONS)
-            print("Metric value: " + str(metric_value))
+            print(f"Executing {str(flag_variation)}: {str(i+1)}/{NUMBER_OF_ITERATIONS}")
+            print(f"Metric value: {str(metric_value)}")
                 
 
         else:
             metric_value = numeric_value(FALSE_CENTER_VALUE, FALSE_SPREAD)
             ldclient.get().track(METRIC_NAME, random_user, None, metric_value)
-            print("Executing " + str(flag_variation) + ": " + str(i+1) + "/" + NUMBER_OF_ITERATIONS)
-            print("Metric value: " + str(metric_value))
+            print(f"Executing {str(flag_variation)}: {str(i+1)}/{NUMBER_OF_ITERATIONS}")
+            print(f"Metric value: {str(metric_value)}")
 
-
+œ
 '''
 Execute!
 '''
