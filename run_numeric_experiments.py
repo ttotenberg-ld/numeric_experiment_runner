@@ -1,12 +1,11 @@
 from dotenv import load_dotenv #pip install python-dotenv
 import ldclient
 from ldclient.config import Config
-import names
 import os
 import random
 import time
-import uuid
-from utils.user_countries import random_country
+from utils.get_variation_list import variation_list
+from utils.create_user import random_ld_user
 
 
 '''
@@ -15,12 +14,10 @@ Get environment variables
 load_dotenv()
 
 SDK_KEY = os.environ.get('SDK_KEY')
-FLAG_NAME = os.environ.get('FLAG_NAME')
+API_KEY = os.environ.get('API_KEY')
+PROJECT_KEY = os.environ.get('PROJECT_KEY')
+FLAG_KEY = os.environ.get('FLAG_KEY')
 METRIC_NAME = os.environ.get('METRIC_NAME')
-TRUE_CENTER_VALUE = os.environ.get('TRUE_CENTER_VALUE')
-TRUE_SPREAD = os.environ.get('TRUE_SPREAD')
-FALSE_CENTER_VALUE = os.environ.get('FALSE_CENTER_VALUE')
-FALSE_SPREAD = os.environ.get('FALSE_SPREAD')
 NUMBER_OF_ITERATIONS = os.environ.get('NUMBER_OF_ITERATIONS')
 
 
@@ -31,31 +28,52 @@ ldclient.set_config(Config(SDK_KEY))
 
 
 '''
-Construct and return a random user
+Make an API call to LaunchDarkly to get the list of variations for the desired flag.
 '''
-def random_ld_user():
-    first_name = names.get_first_name()
-    last_name = names.get_last_name()
-    plan = random.choice(["free", "silver", "gold"])
-    email = first_name + "." + last_name + random.choice(["@gmail.com", "@yahoo.com", "@hotmail.com"])
+flag_variations = variation_list(PROJECT_KEY, FLAG_KEY, API_KEY)
 
-    user = {
-        "key": str(uuid.uuid4()),
-        "firstName": first_name,
-        "lastName": last_name,
-        "email": email,
-        "country": random_country(),
-        "custom": {
-          "plan": plan
-        }
-    }
-    return user
+
+'''
+Get user input for the center numeric value
+'''
+def get_center_value(variation):
+    center_value = input(f"Please enter a center value for {variation}: ")
+    return center_value
+
+'''
+Get user input for the numeric spread
+'''
+def get_spread_value(variation):
+    spread = input(f"Please enter a spread for {variation}: ")
+    return spread
+
+
+'''
+Constructs a dictionary of variations and their numeric values
+center = that variations center. This will end up being the average metric value for that variation
+spread = the spread above and below the center. Will randomize metric values between the low and high spread values
+'''
+def construct_variations_dictionary():
+    num_variations = len(flag_variations)
+    variations_dict_list = []
+    numeric_list = []
+
+    for i in range(num_variations):
+        variations_dict_list.append(f'{flag_variations[i]}_center')
+        variations_dict_list.append(f'{flag_variations[i]}_spread')
+        numeric_list.append(f'{get_center_value(flag_variations[i])}')
+        numeric_list.append(f'{get_spread_value(flag_variations[i])}')
+    
+    variations_dictionary = dict(zip(variations_dict_list, numeric_list))
+    return variations_dictionary
+
+variations_dictionary = construct_variations_dictionary()
 
 
 '''
 Calculates the numeric value to return as part of the numeric experiment. Takes two arguments:
-center = [VARIATION]_CENTER_VALUE. This should be the overall average of the numeric experiment you want to see
-spread = [VARIATION]_SPREAD. This spread is used to calculate how high above and below the center value the returned values can be.
+center = variation_center. This should be the overall average of the numeric experiment you want to see
+spread = variation_spread. This spread is used to calculate how high above and below the center value the returned values can be.
 '''
 def numeric_value(center, spread):
     low = int(center) - int(spread)
@@ -71,22 +89,18 @@ def callLD():
     for i in range(int(NUMBER_OF_ITERATIONS)):
 
         random_user = random_ld_user()
-        flag_variation = ldclient.get().variation(FLAG_NAME, random_user, False)
+        flag_variation = str(ldclient.get().variation(FLAG_KEY, random_user, False))
+        center = variations_dictionary[f'{flag_variation}_center']
+        spread = variations_dictionary[f'{flag_variation}_spread']
 
-        if flag_variation:
-            metric_value = numeric_value(TRUE_CENTER_VALUE, TRUE_SPREAD)
-            ldclient.get().track(METRIC_NAME, random_user, None, metric_value)
-            print(f"Executing {str(flag_variation)}: {str(i+1)}/{NUMBER_OF_ITERATIONS}")
-            print(f"Metric value: {str(metric_value)}")
-                
+        metric_value = numeric_value(center, spread)
 
-        else:
-            metric_value = numeric_value(FALSE_CENTER_VALUE, FALSE_SPREAD)
-            ldclient.get().track(METRIC_NAME, random_user, None, metric_value)
-            print(f"Executing {str(flag_variation)}: {str(i+1)}/{NUMBER_OF_ITERATIONS}")
-            print(f"Metric value: {str(metric_value)}")
+        ldclient.get().track(METRIC_NAME, random_user, None, metric_value)
+        print(f"Executing {str(flag_variation)}: {str(i+1)}/{NUMBER_OF_ITERATIONS}")
+        print(f"Metric value: {str(metric_value)}")
 
-œ
+
+
 '''
 Execute!
 '''
