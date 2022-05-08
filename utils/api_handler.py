@@ -1,7 +1,6 @@
 import time
-import requests
+import requests #pip install requests
 from requests.exceptions import HTTPError
-# pip install requests
 
 
 BASE_URL = "https://app.launchdarkly.com/api/v2"
