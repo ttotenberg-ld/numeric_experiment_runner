@@ -19,6 +19,8 @@ def random_ld_user():
         "lastName": last_name,
         "email": email,
         "country": random_country(),
+        "age": random.randint(18, 80),
+        "privateAttributeNames": ["age"],
         "custom": {
           "plan": plan
         }
