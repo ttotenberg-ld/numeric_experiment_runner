@@ -100,7 +100,6 @@ def callLD():
         print(f"Metric value: {str(metric_value)}")
 
 
-
 '''
 Execute!
 '''
