@@ -7,6 +7,12 @@ import time
 from utils.get_variation_list import variation_list
 from utils.create_user import random_ld_user
 
+'''
+TO DO:
+1. UI (oh boy!)
+2. Implement reading from .json files, and saving json files. Probably based on flag key.
+3. Implement generating values with numpy, and previewing with pyplot
+'''
 
 '''
 Get environment variables

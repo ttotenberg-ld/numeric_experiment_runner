@@ -1,0 +1,8 @@
+{
+    "sdk_key": "sdk-12345-abcde",
+    "api_key": "api-12345-abcde",
+    "proj_key": "test_project",
+    "flag_key": "test_key",
+    "metric_key": "test_metric",
+    "iterations": "535"
+}
