@@ -27,10 +27,6 @@ class MyWindow(QMainWindow):
 		super(MyWindow,self).__init__()
 		self.initUI()
 
-	'''
-	When the save button is clicked, save the file as "flag_key.json".
-	That json file contains all of the variables put into the fields
-	'''
 	def save(self):
 		save_clicked(self)
 
