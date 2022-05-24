@@ -27,6 +27,9 @@ class MyWindow(QMainWindow):
 		super(MyWindow,self).__init__()
 		self.initUI()
 
+	'''
+	Actions called by the 'Save' and 'Load' buttons. Defined in ./ui_functions
+	'''
 	def save(self):
 		save_clicked(self)
 
@@ -68,7 +71,7 @@ class MyWindow(QMainWindow):
 		Loads initial values from default.json
 		'''
 		try:
-			with open('default.json', 'r') as default_file:
+			with open('saves/default.json', 'r') as default_file:
 				d = json.load(default_file)
 				d_sdk = str(d['sdk_key'])
 				d_api = str(d['api_key'])
