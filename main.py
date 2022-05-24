@@ -6,6 +6,7 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import (
 	QDialog, 
 	QApplication,
+	QFileDialog,
 	QFrame,
 	QMainWindow,
 	QPushButton, 
@@ -16,8 +17,10 @@ from PyQt5.QtWidgets import (
 	QWidget
 )
 import random
-from utils.value_generator import normal_distribution, plot_histogram
 import sys
+from ui_functions.load import load_clicked
+from ui_functions.save import save_clicked
+from utils.value_generator import normal_distribution, plot_histogram
 
 class MyWindow(QMainWindow):
 	def __init__(self):
@@ -28,26 +31,26 @@ class MyWindow(QMainWindow):
 	When the save button is clicked, save the file as "flag_key.json".
 	That json file contains all of the variables put into the fields
 	'''
-	def save_clicked(self):
-		sdk_text = str(self.sdk_key.text())
-		api_text = str(self.api_key.text())
-		proj_text = str(self.proj_key.text())
-		flag_text = str(self.flag_key.text())
-		metric_text = str(self.metric_key.text())
-		iterations_text = str(self.iterations.text())
+	def save(self):
+		save_clicked(self)
 
-		field_list = ['sdk_key', 'api_key', 'proj_key', 'flag_key', 'metric_key', 'iterations']
-		field_text_list = [sdk_text, api_text, proj_text, flag_text, metric_text, iterations_text]
-		fields_dict = dict(zip(field_list, field_text_list))
-		fields_json = json.dumps(fields_dict, indent=4)
+	def load(self):
+		load_clicked(self)
+	
+	# action called by the plot button
+	def plot(self):
+		
+		# random data
+		chart_data = normal_distribution(25, 5, 5000)
 
-		f = open(flag_text + '.json', 'w')
-		f.write(str(fields_json))
-		f.close
+		# clearing old figure
+		self.figure.clear()
 
-		d = open('default.json', 'w')
-		d.write(str(fields_json))
-		d.close
+		# plotting as a histogram
+		plot_histogram(chart_data, "variation")
+
+		# refresh canvas
+		self.canvas.draw()
 
 	def initUI(self):
 		self.outerLayout = QVBoxLayout()
@@ -59,8 +62,10 @@ class MyWindow(QMainWindow):
 		self.saveLayout = QHBoxLayout()
 		self.save_button = (QPushButton("Save"))
 		self.saveLayout.addWidget(self.save_button)
-		self.save_button.clicked.connect(self.save_clicked)
-		self.load_button = self.saveLayout.addWidget(QPushButton("Load"))
+		self.save_button.clicked.connect(self.save)
+		self.load_button = (QPushButton("Load"))
+		self.saveLayout.addWidget(self.load_button)
+		self.load_button.clicked.connect(self.load)
 		
 		'''
 		Primary variables
@@ -137,23 +142,6 @@ class MyWindow(QMainWindow):
 		widget.setLayout(self.outerLayout)
 		self.setCentralWidget(widget)
 	
-	
-
-	# action called by the push button
-	def plot(self):
-		
-		# random data
-		chart_data = normal_distribution(25, 5, 5000)
-
-		# clearing old figure
-		self.figure.clear()
-
-		# plotting as a histogram
-		plot_histogram(chart_data, "variation")
-
-		# refresh canvas
-		self.canvas.draw()
-
 
 def window():
     app = QApplication(sys.argv)
