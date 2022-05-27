@@ -17,7 +17,7 @@ def save_clicked(self):
     fields_dict = dict(zip(field_list, field_text_list))
     fields_json = json.dumps(fields_dict, indent=4)
 
-    f = open('saves/' + flag_text + '.json', 'w')
+    f = open(f'saves/{flag_text}-{metric_text}.json', 'w')
     f.write(str(fields_json))
     f.close
 
