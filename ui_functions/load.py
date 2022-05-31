@@ -1,5 +1,6 @@
 import json
 from PyQt5.QtWidgets import QFileDialog
+from ui_functions.variations import load_variations
 
 def load_clicked(self):
     loaded_file = QFileDialog.getOpenFileName(self, filter='JSON (*.json)')
@@ -8,6 +9,9 @@ def load_clicked(self):
         f = json.load(filename)
         filename.close
 
+        '''
+        Read top values from files and populate them
+        '''
         f_sdk = str(f['sdk_key'])
         f_api = str(f['api_key'])
         f_proj = str(f['proj_key'])
@@ -21,3 +25,8 @@ def load_clicked(self):
         self.flag_key.setText(f_flag)
         self.metric_key.setText(f_metric)
         self.events.setText(f_events)
+
+        load_variations(self, f)
+
+
+
