@@ -10,10 +10,10 @@ def save_clicked(self):
     proj_text = str(self.proj_key.text())
     flag_text = str(self.flag_key.text())
     metric_text = str(self.metric_key.text())
-    iterations_text = str(self.iterations.text())
+    events_text = str(self.events.text())
 
-    field_list = ['sdk_key', 'api_key', 'proj_key', 'flag_key', 'metric_key', 'iterations']
-    field_text_list = [sdk_text, api_text, proj_text, flag_text, metric_text, iterations_text]
+    field_list = ['sdk_key', 'api_key', 'proj_key', 'flag_key', 'metric_key', 'events']
+    field_text_list = [sdk_text, api_text, proj_text, flag_text, metric_text, events_text]
     fields_dict = dict(zip(field_list, field_text_list))
     fields_json = json.dumps(fields_dict, indent=4)
 

@@ -94,9 +94,9 @@ class MyWindow(QMainWindow):
 				d_proj = str(d['proj_key'])
 				d_flag = str(d['flag_key'])
 				d_metric = str(d['metric_key'])
-				d_iterations = str(d['iterations'])
+				d_events = str(d['events'])
 		except:
-			d_sdk, d_api, d_proj, d_flag, d_metric, d_iterations = '', '', '', '', '', ''
+			d_sdk, d_api, d_proj, d_flag, d_metric, d_events = '', '', '', '', '', ''
 
 
 		'''
@@ -119,9 +119,9 @@ class MyWindow(QMainWindow):
 		self.metric_key = QLineEdit()
 		self.metric_key.setText(d_metric)
 		self.formLayout.addRow("Metric Key:", self.metric_key)
-		self.iterations = QLineEdit()
-		self.iterations.setText(d_iterations)
-		self.formLayout.addRow("Iterations:", self.iterations)
+		self.events = QLineEdit()
+		self.events.setText(d_events)
+		self.formLayout.addRow("Events:", self.events)
 
 		'''
 		Variation list, mean values, and spread

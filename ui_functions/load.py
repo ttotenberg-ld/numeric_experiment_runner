@@ -13,11 +13,11 @@ def load_clicked(self):
         f_proj = str(f['proj_key'])
         f_flag = str(f['flag_key'])
         f_metric = str(f['metric_key'])
-        f_iterations = str(f['iterations'])
+        f_events = str(f['events'])
 
         self.sdk_key.setText(f_sdk)
         self.api_key.setText(f_api)
         self.proj_key.setText(f_proj)
         self.flag_key.setText(f_flag)
         self.metric_key.setText(f_metric)
-        self.iterations.setText(f_iterations)
+        self.events.setText(f_events)

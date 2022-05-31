@@ -7,18 +7,18 @@ import random
 Returns a distribution of values given the following inputs:
 CENTER: The mean of the distribution
 SPREAD: The standard deviation or 'width' of the distribution. Remember that edge values may be up to ~3x above/below the standard deviation
-ITERATIONS: The number of values that will be returned
+events: The number of values that will be returned
 '''
-def normal_distribution(center, spread, iterations):
-    value_array = np.random.default_rng().normal(center, spread, iterations)
+def normal_distribution(center, spread, events):
+    value_array = np.random.default_rng().normal(center, spread, events)
     return value_array
 
 
-def random_distribution(center, spread, iterations):
+def random_distribution(center, spread, events):
     low = int(center) - int(spread*3)
     high = int(center) + int(spread*3)
     value_array = []
-    for i in range(iterations):
+    for i in range(events):
         value_array.append(random.randint(low, high))
     return value_array
 
