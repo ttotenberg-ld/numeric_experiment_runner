@@ -38,6 +38,12 @@ class MyWindow(QMainWindow):
 		load_clicked(self)
 
 	'''
+	Auto save on close
+	'''
+	def closeEvent(self, event):
+		self.save()
+
+	'''
 	Get variations and populate fields
 	'''
 	def get_variations(self):
@@ -116,7 +122,6 @@ class MyWindow(QMainWindow):
 
 		except:
 			d_sdk, d_api, d_proj, d_flag, d_metric, d_events = '', '', '', '', '', ''
-
 
 		'''
 		Primary fields
