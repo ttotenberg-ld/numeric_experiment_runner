@@ -21,7 +21,7 @@ import sys
 from ui_functions.load import load_clicked
 from ui_functions.save import save_clicked
 from ui_functions.variations import get_variations_clicked, load_variations
-from utils.value_generator import normal_distribution, plot_histogram
+from ui_functions.preview import preview_clicked
 
 class MyWindow(QMainWindow):
 	def __init__(self):
@@ -51,25 +51,8 @@ class MyWindow(QMainWindow):
 
 	
 	# action called by the plot button
-	def plot(self):
-		
-		# random data
-		normal_example = normal_distribution(25, 5, 5000)
-		another_normal_example = normal_distribution(30, 5, 5000)
-		yet_another_normal_example = normal_distribution(40, 5, 5000)
-		and_another_normal_example = normal_distribution(50, 10, 5000)
-
-		# clearing old figure
-		self.figure.clear()
-
-		# plotting as a histogram
-		plot_histogram(normal_example, "gray")
-		plot_histogram(another_normal_example, "blue")
-		plot_histogram(yet_another_normal_example, "purple")
-		plot_histogram(and_another_normal_example, "red")
-
-		# refresh canvas
-		self.canvas.draw()
+	def preview(self):
+		preview_clicked(self)
 
 	'''
 	Draw the UI
@@ -156,7 +139,7 @@ class MyWindow(QMainWindow):
 		self.chartLayout.addWidget(self.toolbar)
 		self.chart_button = QPushButton('Preview')
 		self.chartLayout.addWidget(self.chart_button)
-		self.chart_button.clicked.connect(self.plot)
+		self.chart_button.clicked.connect(self.preview)
 
 		'''
 		Send to LD
@@ -180,6 +163,7 @@ class MyWindow(QMainWindow):
 		# Footer
 		self.outerLayout.addLayout(self.footerLayout)
 
+		# Main widget
 		widget = QWidget()
 		widget.setLayout(self.outerLayout)
 		self.setCentralWidget(widget)
