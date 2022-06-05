@@ -2,7 +2,7 @@ import json
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 import matplotlib.pyplot as plt
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import (
 	QDialog, 
 	QApplication,
@@ -14,6 +14,7 @@ from PyQt5.QtWidgets import (
 	QVBoxLayout, 
 	QFormLayout,
 	QLineEdit,
+	QTextEdit,
 	QWidget
 )
 import random
@@ -22,7 +23,13 @@ from ui_functions.load import load_clicked
 from ui_functions.save import save_clicked
 from ui_functions.variations import get_variations_clicked, load_variations
 from ui_functions.preview import preview_clicked
+from ui_functions.run import run_clicked
 
+'''
+TO DO:
+- Console output
+- Send info to LD
+'''
 class MyWindow(QMainWindow):
 	def __init__(self):
 		super(MyWindow,self).__init__()
@@ -49,10 +56,17 @@ class MyWindow(QMainWindow):
 	def get_variations(self):
 		get_variations_clicked(self)
 
-	
-	# action called by the plot button
+	'''
+	Action called by the 'Preview' button, which plots a chart with experimentation info
+	'''
 	def preview(self):
 		preview_clicked(self)
+
+	'''
+	Action called by the 'Run Experiments' button.
+	'''
+	def run(self):
+		run_clicked(self)
 
 	'''
 	Draw the UI
@@ -121,6 +135,7 @@ class MyWindow(QMainWindow):
 		self.flag_key.setText(d_flag)
 		self.metric_key.setText(d_metric)
 		self.events.setText(d_events)
+		self.events.setToolTip("Total number of track() events to send to LaunchDarkly")
 		self.formLayout.addRow("SDK Key:", self.sdk_key)
 		self.formLayout.addRow("API Key:", self.api_key)
 		self.formLayout.addRow("Project Key:", self.proj_key)
@@ -138,6 +153,7 @@ class MyWindow(QMainWindow):
 		self.toolbar = NavigationToolbar(self.canvas, self)
 		self.chartLayout.addWidget(self.toolbar)
 		self.chart_button = QPushButton('Preview')
+		self.chart_button.setToolTip("Approximation of what the chart will look like in LD. Not exact.")
 		self.chartLayout.addWidget(self.chart_button)
 		self.chart_button.clicked.connect(self.preview)
 
@@ -145,7 +161,11 @@ class MyWindow(QMainWindow):
 		Send to LD
 		'''
 		self.send_button = QPushButton('Run Experiments')
+		self.terminal = QTextEdit()
+		self.send_button.setToolTip(f"Sends track() calls to LaunchDarkly")
+		self.send_button.clicked.connect(self.run)
 		self.footerLayout.addWidget(self.send_button)
+		self.footerLayout.addWidget(self.terminal)
 
 		'''
 		Construct layouts

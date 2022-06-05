@@ -13,7 +13,7 @@ def construct_variations_list(self):
     if len(current_variations) == len(current_values):
         fields_list = dict(zip(current_variations, current_values))
     else:
-        print("please fill out all of the fields")
+        print("Please fill out all of the fields")
 
     return fields_list
     
@@ -28,7 +28,7 @@ def normal_distribution(center, spread, events):
     value_array = np.random.default_rng().normal(center, spread, events)
     return value_array
 
-
+# Currently not implemented, could implement for alternate distributions later
 def random_distribution(center, spread, events):
     low = int(center) - int(spread*3)
     high = int(center) + int(spread*3)

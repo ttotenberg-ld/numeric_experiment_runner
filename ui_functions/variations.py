@@ -7,7 +7,7 @@ from utils.get_variation_list import variation_list
 
 
 '''
-Function used in load.pyto populate variations fields from loaded file
+Function used in load.py to populate variations fields from loaded file
 '''
 def load_variations(self, loaded_file):
     for i in reversed(range(self.bottomFormLayout.count())):
