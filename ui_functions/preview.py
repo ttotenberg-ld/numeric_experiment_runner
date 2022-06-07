@@ -29,7 +29,6 @@ def plot_histogram(data, variation):
     return histogram
 
     
-
 '''
 Action called when the preview button is clicked
 '''
