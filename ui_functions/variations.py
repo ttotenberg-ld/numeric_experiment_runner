@@ -111,8 +111,14 @@ def populate_variations(self, variations):
     for i in range(len(variations)):
         text = str(variations[i])
         new_variations[f'{text}'] = {}
-        new_variations[f'{text}']['center'] = str(get_specific_value(self, str(variations[i]), 'center'))
-        new_variations[f'{text}']['spread'] = str(get_specific_value(self, str(variations[i]), 'spread'))
+        center_text = str(get_specific_value(self, str(variations[i]), 'center'))
+        spread_text = str(get_specific_value(self, str(variations[i]), 'spread'))
+        if center_text == 'None':
+            center_text = ''
+        if spread_text == 'None':
+            spread_text = ''
+        new_variations[f'{text}']['center'] = center_text
+        new_variations[f'{text}']['spread'] = spread_text
 
     # Get the list of current values. Add blank values to match number of fields if needed.
     loaded_values = get_current_values(self)
