@@ -1,5 +1,5 @@
 import json
-from ui_functions.variations import get_current_values, get_current_variations
+from ui_functions.variations import get_current_values, get_current_variations, get_specific_value
 
 
 '''
@@ -7,15 +7,15 @@ Construct a json dictionary of variation fields
 '''
 def construct_variations_list(self):
     current_variations = get_current_variations(self)
-    current_values = get_current_values(self)
-    if len(current_values) < len(current_variations):
-        difference = len(current_variations) - len(current_values)
-        for i in range(difference):
-            current_values.append('')
 
-    fields_list = dict(zip(current_variations, current_values))
-    return fields_list
+    var_dict = {}
+    for i in range(len(current_variations)):
+        variation = str(current_variations[i])
+        var_dict[f'{variation}'] = {}
+        var_dict[f'{variation}']['center'] = str(get_specific_value(self, variation, 'center'))
+        var_dict[f'{variation}']['spread'] = str(get_specific_value(self, variation, 'spread'))
 
+    return var_dict
 
 '''
 When the save button is clicked, save the file as "flag_key-metric_key.json".
