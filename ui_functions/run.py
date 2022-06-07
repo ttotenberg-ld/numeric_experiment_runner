@@ -1,6 +1,6 @@
 import ldclient
 from ldclient.config import Config
-from ui_functions.preview import construct_variations_list, deduplicate_fields, normal_distribution
+from ui_functions.preview import normal_distribution
 from ui_functions.variations import get_variation_list
 from utils.create_user import random_ld_user
 from PyQt5.QtGui import QTextCursor
