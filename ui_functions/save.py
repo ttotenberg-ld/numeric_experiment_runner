@@ -1,4 +1,5 @@
 import json
+import os
 from ui_functions.variations import get_current_values, get_current_variations, get_specific_value
 
 
@@ -35,10 +36,12 @@ def save_clicked(self):
     fields_dict = dict(zip(field_list, field_text_list))
     fields_json = json.dumps(fields_dict, indent=4)
 
-    f = open(f'saves/{flag_text}-{metric_text}.json', 'w')
+    save_path = os.path.expanduser("~") + '/Documents/ExperimentRunner'
+
+    f = open(f'{save_path}/{flag_text}-{metric_text}.json', 'w')
     f.write(str(fields_json))
     f.close
 
-    d = open('saves/' + 'default.json', 'w')
+    d = open(f'{save_path}/default.json', 'w')
     d.write(str(fields_json))
     d.close

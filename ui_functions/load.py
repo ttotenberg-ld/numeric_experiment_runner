@@ -1,9 +1,11 @@
 import json
+import os
 from PyQt5.QtWidgets import QFileDialog
 from ui_functions.variations import load_variations
 
 def load_clicked(self):
-    loaded_file = QFileDialog.getOpenFileName(self, directory='./saves', filter='JSON (*.json)')
+    save_path = os.path.expanduser("~") + '/Documents/ExperimentRunner'
+    loaded_file = QFileDialog.getOpenFileName(self, directory=save_path, filter='JSON (*.json)')
     if not loaded_file[0] == '':
         filename = open(str(loaded_file[0]), 'r')
         f = json.load(filename)

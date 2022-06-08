@@ -13,11 +13,12 @@ from PyQt5.QtWidgets import (
 	QHBoxLayout,
 	QVBoxLayout, 
 	QFormLayout,
+	QLabel,
 	QLineEdit,
-	QTextEdit,
 	QWidget
 )
 import random
+import os
 import sys
 from ui_functions.load import load_clicked
 from ui_functions.save import save_clicked
@@ -105,8 +106,13 @@ class MyWindow(QMainWindow):
 		'''
 		Load initial values from default.json
 		'''
+		save_path = os.path.expanduser("~") + '/Documents/ExperimentRunner'
+		path_exists = os.path.exists(save_path)
+		if not path_exists:
+			os.makedirs(save_path)
+
 		try:
-			with open('saves/default.json', 'r') as default_file:
+			with open(f'{save_path}/default.json', 'r') as default_file:
 				d = json.load(default_file)
 				d_sdk = str(d['sdk_key'])
 				d_api = str(d['api_key'])
@@ -161,11 +167,16 @@ class MyWindow(QMainWindow):
 		Send to LD
 		'''
 		self.send_button = QPushButton('Run Experiments')
-		self.terminal = QTextEdit()
+		self.progress_label = QLabel()
+		self.progress_label.setText("Progress:")
+		# self.progress_bar = QProgressBar()
+		# self.terminal = QTextEdit()
 		self.send_button.setToolTip(f"Sends track() calls to LaunchDarkly")
 		self.send_button.clicked.connect(self.run)
 		self.footerLayout.addWidget(self.send_button)
-		self.footerLayout.addWidget(self.terminal)
+		self.footerLayout.addWidget(self.progress_label)
+		# self.footerLayout.addWidget(self.progress_bar)
+		# self.footerLayout.addWidget(self.terminal)
 
 		'''
 		Construct layouts
