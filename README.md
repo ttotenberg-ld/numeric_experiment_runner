@@ -6,6 +6,7 @@ This is a utility that has the potential to spoof a LOT of data, and send real `
 This utility is unsupported, and not intended as a model for any sort of serious usage. It's a hacked together tool that solves a problem I had, nothing more. :)
 
 ## Installation
+1. On the releases page, download 'ExperimentRunner.zip'. Extract 'ExperimentRunner.app' from that zip file.
 1. Copy ExperimentRunner.app to your Applications folder
 1. Run it!
 1. The first time you do run it, MacOS will likely warn you that it's trying to save files in `/Users/[USER]/Documents/ExperimentRunner`. Click OK to allow this.
