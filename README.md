@@ -35,3 +35,14 @@ This utility is unsupported, and not intended as a model for any sort of serious
     1. Also note that the higher your `Events` value, the smoother the curve will be.
 1. When ready, click **'Run Experiments'** to send the `track()` calls to LaunchDarkly.
     1. ***Clicking 'Run Experiments' will create fake users, evaluate your flag, and send real events to your LaunchDarkly account.***
+
+## Development
+Ignore this section if you just want to use the experiment runner - see Installation above instead.
+
+To make changes to the code:
+1. Install required libraries:
+    1. Run `pip install -r requirements.txt`
+1. Run `python main.py`
+
+To build a package:
+1. Use [PyInstaller](https://pyinstaller.org/en/stable/).
