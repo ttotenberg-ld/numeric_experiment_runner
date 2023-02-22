@@ -5,3 +5,10 @@ __pycache__
 build
 dist
 *.spec
+dist*
+build*
+*.spec*
+venv
+lib
+include
+bin

@@ -13,5 +13,5 @@ def variation_list(projectkey, flagkey, apikey):
 
     for i in range(number_of_variations):
         variation_list.append(response['variations'][i]['value'])
-    
+
     return variation_list

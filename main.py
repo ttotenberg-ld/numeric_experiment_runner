@@ -27,9 +27,7 @@ from ui_functions.preview import preview_clicked
 from ui_functions.run import run_clicked
 
 '''
-TO DO:
-- Console output
-- Send info to LD
+Main class which renders the PYQT window
 '''
 class MyWindow(QMainWindow):
 	def __init__(self):
@@ -169,14 +167,10 @@ class MyWindow(QMainWindow):
 		self.send_button = QPushButton('Run Experiments')
 		self.progress_label = QLabel()
 		self.progress_label.setText("Progress:")
-		# self.progress_bar = QProgressBar()
-		# self.terminal = QTextEdit()
 		self.send_button.setToolTip(f"Sends track() calls to LaunchDarkly")
 		self.send_button.clicked.connect(self.run)
 		self.footerLayout.addWidget(self.send_button)
 		self.footerLayout.addWidget(self.progress_label)
-		# self.footerLayout.addWidget(self.progress_bar)
-		# self.footerLayout.addWidget(self.terminal)
 
 		'''
 		Construct layouts

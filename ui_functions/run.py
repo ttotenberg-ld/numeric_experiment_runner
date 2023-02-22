@@ -2,7 +2,7 @@ import ldclient
 from ldclient.config import Config
 from ui_functions.preview import normal_distribution
 from ui_functions.variations import get_current_variations, get_specific_value
-from utils.create_user import random_ld_user
+from utils.create_context import *
 import random
 import threading
 
@@ -44,10 +44,10 @@ def execute_track_call(self):
     ldclient.set_config(Config(sdk_text))
 
     for i in range(events_text):
-        user = random_ld_user()
-        flag_variation = str(ldclient.get().variation(flag_text, user, default_variation))       
+        context = create_multi_context()
+        flag_variation = str(ldclient.get().variation(flag_text, context, default_variation))       
         numeric_value = random.choice(data[f'{flag_variation}'])
-        ldclient.get().track(metric_text, user, None, numeric_value)
+        ldclient.get().track(metric_text, context, None, numeric_value)
         self.progress_label.setText(f"Progress: sending track event {i+1}/{events_text}")
 
     ldclient.get().close()
