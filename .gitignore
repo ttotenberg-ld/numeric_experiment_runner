@@ -12,3 +12,4 @@ venv
 lib
 include
 bin
+.vscode

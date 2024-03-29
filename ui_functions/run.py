@@ -45,7 +45,8 @@ def execute_track_call(self):
 
     for i in range(events_text):
         context = create_multi_context()
-        flag_variation = str(ldclient.get().variation(flag_text, context, default_variation))       
+        flag_variation = str(ldclient.get().variation(flag_text, context, default_variation))
+        print(f'flag variation is: {flag_variation}')       
         numeric_value = random.choice(data[f'{flag_variation}'])
         ldclient.get().track(metric_text, context, None, numeric_value)
         self.progress_label.setText(f"Progress: sending track event {i+1}/{events_text}")
